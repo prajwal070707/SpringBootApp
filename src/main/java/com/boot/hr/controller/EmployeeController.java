@@ -1,57 +1,41 @@
-package com.boot.hr;
+package com.boot.hr.controller;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.boot.hr.model.Employee;
+import com.boot.hr.service.EmployeeService;
 
 @RestController
 @RequestMapping( value = "/api/employee")
 
 public class EmployeeController {
 	
+	@Autowired
+	EmployeeService employeeService;
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/")
 	public String addEmployee(@RequestBody Employee employee) {
 		System.out.println(employee.toString());
-		return null;
+		
+		return employeeService.addEmployee(employee);
 	}
 
 
 	@RequestMapping(method = RequestMethod.GET, value = "/v1")
 	public ArrayList<Employee> getAllEmployee() {
-		
-		
-		Employee emp = new Employee();
-		emp.setFirstName("Krishna");
-		emp.setLastName("Shree");
-		emp.setAge(999999999);
-		emp.setEmployeeId(1);
-		
-		Employee emp2 = new Employee();
-		emp2.setFirstName("Lakshman");
-		emp2.setLastName("Ram");
-		emp2.setAge(999999999);
-		emp2.setEmployeeId(1);
-		
-		
-		
-		//just for testing
-		ArrayList<Employee> arr = new ArrayList<Employee>();
-		
-		
-		arr.add(emp);
-		arr.add(emp2);
-		
-		
-		return arr;
+
+		return employeeService.getAllEmployee();
 	}
 	
-	
-	public ArrayList<Employee> getEmployeeById(Integer employeeId){
-		return null;
+	@RequestMapping(method=RequestMethod.GET, value = "/{{id}}")
+	public Employee getEmployeeById(@PathVariable Integer employeeId){
+		return employeeService.getEmployeeById(employeeId);
 	}
 }

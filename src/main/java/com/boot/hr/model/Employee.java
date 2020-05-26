@@ -1,8 +1,16 @@
 package com.boot.hr.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Employee {
 	
+	@Id
+	@GeneratedValue
 	private Integer employeeId;
+	
 	private String firstName;
 	private String lastName;
 	private Integer age;
